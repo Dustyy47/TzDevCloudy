@@ -1,30 +1,15 @@
 import { Box, Button, Container, Typography } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 import clsx from "clsx";
-import { useEffect, useState } from "react";
-import { CreateUserForm } from "../components/CreateUserForm";
-import CustomModal from "../components/CustomModal";
+import { CreateUser } from "../components/CreateUser";
+import { EditUser } from "../components/EditUser";
 import { UsersList } from "../components/UsersList";
+import { useCreateUserModal } from "../hooks/useCreateUserModal";
 import { useUsers } from "../hooks/useUsers";
 
-type IUsersModalState = "closed" | "edit" | "create";
-
 export function UsersScreen() {
-  const { users, isLoading, loadUser, loadUsers, deleteUser } = useUsers();
-  const [modalState, setModalState] = useState<IUsersModalState>("closed");
-
-  useEffect(() => {
-    loadUsers();
-  }, []);
-
-  function handleStartCreatingUser(e: React.MouseEvent) {
-    e.stopPropagation();
-    setModalState("create");
-  }
-
-  function handleCloseModal() {
-    setModalState("closed");
-  }
+  const { users, isLoading } = useUsers();
+  const { open } = useCreateUserModal();
 
   return (
     <>
@@ -36,17 +21,9 @@ export function UsersScreen() {
             users.length === 0 ? "flex-col" : "flex-col-reverse"
           )}
         >
-          <UsersList
-            users={users}
-            isLoading={isLoading}
-            onClickUser={loadUser}
-            onDeleteUser={deleteUser}
-          />
+          <UsersList />
           {!isLoading && (
-            <Button
-              onClick={handleStartCreatingUser}
-              className="flex items-center max-w-fit p-2"
-            >
+            <Button onClick={open} className="flex items-center max-w-fit p-2">
               <Typography color="primary" className="h-full leading-none">
                 Новый пользователь
               </Typography>
@@ -55,14 +32,8 @@ export function UsersScreen() {
           )}
         </Box>
       </Container>
-      <CustomModal
-        onClose={handleCloseModal}
-        open={modalState !== "closed"}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <div>{modalState === "create" && <CreateUserForm />}</div>
-      </CustomModal>
+      <CreateUser />
+      <EditUser />
     </>
   );
 }

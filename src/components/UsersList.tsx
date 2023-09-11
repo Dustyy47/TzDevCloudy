@@ -1,18 +1,15 @@
 import { Box, CircularProgress, Typography } from "@material-ui/core";
-import { IUser } from "../types";
+import { useEffect } from "react";
+import { useUsers } from "../hooks/useUsers";
 import { UserCard } from "./UserCard";
 
-export function UsersList({
-  users,
-  isLoading,
-  onClickUser,
-  onDeleteUser,
-}: {
-  users: IUser[];
-  isLoading: boolean;
-  onClickUser: (user: IUser) => void;
-  onDeleteUser: (user: IUser) => void;
-}) {
+export function UsersList() {
+  const { isLoading, loadUsers, users } = useUsers();
+
+  useEffect(() => {
+    loadUsers();
+  }, []);
+
   if (isLoading) return <CircularProgress />;
   if (users.length === 0) {
     return (
@@ -24,12 +21,7 @@ export function UsersList({
   return (
     <Box className="flex flex-col gap-2">
       {users.map((user) => (
-        <UserCard
-          onDelete={onDeleteUser}
-          onClick={onClickUser}
-          key={user.id}
-          user={user}
-        />
+        <UserCard key={user.id} user={user} />
       ))}
     </Box>
   );

@@ -2,14 +2,14 @@ import {
   Box,
   Button,
   FormControl,
-  FormLabel,
   Input,
   InputLabel,
   Typography,
 } from "@material-ui/core";
 import { useForm } from "react-hook-form";
-import { useUsers } from "../hooks/useUsers";
-import { AvatarPicker } from "./AvatarPicker";
+import { useCreateUserModal } from "../hooks/useCreateUserModal";
+import { ICreateUser } from "../types";
+import CustomModal from "./CustomModal";
 
 const formStyle = {
   display: "flex",
@@ -17,22 +17,13 @@ const formStyle = {
   gap: "1rem",
 };
 
-interface ICreateUserForm {
-  name: string;
-  files: File[];
-}
-
-export function CreateUserForm() {
-  const { register, handleSubmit } = useForm<ICreateUserForm>();
-  const { createUser } = useUsers();
-
-  function onSubmit(fields: ICreateUserForm) {
-    createUser({ name: fields.name, avatar: fields.files[0] });
-  }
+export function CreateUser() {
+  const { register, handleSubmit } = useForm<ICreateUser>();
+  const { isOpen, close, submit } = useCreateUserModal();
 
   return (
-    <Box>
-      <form onSubmit={handleSubmit(onSubmit)}>
+    <CustomModal open={isOpen} onClose={close}>
+      <form onSubmit={handleSubmit(submit)}>
         <Typography>Создание пользователя</Typography>
         <Box sx={formStyle}>
           <FormControl>
@@ -43,15 +34,15 @@ export function CreateUserForm() {
             />
           </FormControl>
           <FormControl>
-            <FormLabel className="mb-2">Аватарка</FormLabel>
-            <AvatarPicker
-              {...register("files", { required: true })}
-              setFile={console.log}
+            <InputLabel>Аватар</InputLabel>
+            <Input
+              {...register("avatar", { required: false })}
+              placeholder="Введите ссылку на аватар"
             />
           </FormControl>
           <Button type="submit">Подтвердить</Button>
         </Box>
       </form>
-    </Box>
+    </CustomModal>
   );
 }

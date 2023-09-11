@@ -1,5 +1,5 @@
 import { $api } from ".";
-import { IUser } from "../types";
+import { ICreateUser, IEditUser, IUser } from "../types";
 
 class UsersAPI {
   async getUsers() {
@@ -16,9 +16,9 @@ class UsersAPI {
     } catch (e) {}
   }
 
-  async createUser(formData: FormData) {
+  async createUser(inputData: ICreateUser) {
     try {
-      const { data } = await $api.post("users/", formData);
+      const { data } = await $api.post("users/", inputData);
       return data;
     } catch (e) {}
   }
@@ -26,6 +26,16 @@ class UsersAPI {
   async deleteUser(id: string) {
     try {
       const { data } = await $api.delete(`users/${id}`);
+      return data;
+    } catch (e) {}
+  }
+
+  async editUser(inputData: IEditUser) {
+    try {
+      const { data } = await $api.put<IUser>(`users/${inputData.id}`, {
+        name: inputData.name,
+        avatar: inputData.avatar,
+      });
       return data;
     } catch (e) {}
   }

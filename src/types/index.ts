@@ -7,5 +7,9 @@ export interface IUser {
 
 export interface ICreateUser {
   name: string;
-  avatar: File;
+  avatar?: string;
+}
+
+export interface IEditUser extends ICreateUser {
+  id: string;
 }
