@@ -1,4 +1,4 @@
-import { IEditUserForm } from "../components/EditUser";
+import { IEditUserForm } from "../components/organisms/EditUser";
 import { useAppDispatch, useAppSelector } from "../store";
 import { usersActions } from "../store/slices/usersSlice";
 import { IUser } from "../types";

@@ -1,7 +1,7 @@
 import { Box, CircularProgress, Typography } from "@material-ui/core";
 import { useEffect } from "react";
-import { useProducts } from "../hooks/useProducts";
-import { ProductCard } from "./ProductCard";
+import { useProducts } from "../../hooks/useProducts";
+import { ProductCard } from "../molecules/ProductCard";
 
 export function ProductsList() {
   const { isLoading, products, loadProducts } = useProducts();

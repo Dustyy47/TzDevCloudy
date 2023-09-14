@@ -20,8 +20,8 @@ export function useEditProductModal() {
   }
 
   async function submit(data: IEditProductForm) {
-    close();
     if (!editingProduct || !activeUser) return;
+    close();
     await dispatch(
       productsActions.editProduct({
         id: editingProduct.id,

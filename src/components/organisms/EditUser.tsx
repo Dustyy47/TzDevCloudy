@@ -2,14 +2,13 @@ import {
   Box,
   Button,
   FormControl,
-  Input,
-  InputLabel,
+  TextField,
   Typography,
 } from "@material-ui/core";
 import { useForm } from "react-hook-form";
-import { useEditUserModal } from "../hooks/useEditUserModal";
-import { IEditUser } from "../types";
-import CustomModal from "./CustomModal";
+import { useEditUserModal } from "../../hooks/useEditUserModal";
+import { IEditUser } from "../../types";
+import CustomModal from "../atoms/CustomModal";
 
 const formStyle = {
   display: "flex",
@@ -39,16 +38,16 @@ export function EditUser({}: {}) {
         <Typography>Редактирование пользователя</Typography>
         <Box sx={formStyle}>
           <FormControl>
-            <InputLabel>Имя пользователя</InputLabel>
-            <Input
+            <TextField
+              label="Имя пользователя"
               {...register("name", { required: true })}
               placeholder="Введите имя"
               defaultValue={editingUser?.name}
             />
           </FormControl>
           <FormControl>
-            <InputLabel>Аватар</InputLabel>
-            <Input
+            <TextField
+              label="Аватар"
               {...register("avatar", { required: false })}
               placeholder="Введите ссылку на аватар"
               defaultValue={editingUser?.avatar}

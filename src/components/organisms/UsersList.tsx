@@ -1,7 +1,7 @@
 import { Box, CircularProgress, Typography } from "@material-ui/core";
 import { useEffect } from "react";
-import { useUsers } from "../hooks/useUsers";
-import { UserCard } from "./UserCard";
+import { useUsers } from "../../hooks/useUsers";
+import { UserCard } from "../molecules/UserCard";
 
 export function UsersList() {
   const { isLoading, loadUsers, users } = useUsers();

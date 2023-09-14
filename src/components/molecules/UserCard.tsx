@@ -1,9 +1,9 @@
 import { Avatar, Box, Button, Card, Typography } from "@material-ui/core";
 import CreateIcon from "@material-ui/icons/Create";
 import DeleteIcon from "@material-ui/icons/Delete";
-import { useEditUserModal } from "../hooks/useEditUserModal";
-import { useUsers } from "../hooks/useUsers";
-import { IUser } from "../types";
+import { useEditUserModal } from "../../hooks/useEditUserModal";
+import { useUsers } from "../../hooks/useUsers";
+import { IUser } from "../../types";
 
 export function UserCard({ user }: { user: IUser }) {
   const { loadUser, deleteUser } = useUsers();

@@ -19,15 +19,10 @@ export interface ICreateUser {
   avatar?: string;
 }
 
-export type ICreateProductForm = Omit<ICreateProduct, "userId">;
+export type ICreateProductForm = Omit<ICreateProduct, "userId" | "dateCreate">;
 export type IEditProductForm = ICreateProductForm;
 
-export interface ICreateProduct {
-  userId: string;
-  product: string;
-  price: string;
-  count: number;
-}
+export type ICreateProduct = Omit<IProduct, "id">;
 
 export interface IDeleteProduct {
   id: string;
@@ -38,6 +33,6 @@ export interface IEditUser extends ICreateUser {
   id: string;
 }
 
-export interface IEditProduct extends ICreateProduct {
+export interface IEditProduct extends Omit<IProduct, "dateCreate"> {
   id: string;
 }

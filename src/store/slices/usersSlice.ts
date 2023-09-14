@@ -1,9 +1,6 @@
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-import {
-  ApiError,
-  handleApiError,
-} from "../../components/helpers/handleErrors";
+import { ApiError, handleApiError } from "../../helpers/handleErrors";
 import UsersAPI from "../../http/UsersAPI";
 import { ICreateUser, IEditUser, IUser } from "../../types";
 

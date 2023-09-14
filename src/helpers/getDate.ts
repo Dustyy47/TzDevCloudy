@@ -1,7 +1,7 @@
 export function getDate(dateString: string) {
   const res = new Date(dateString);
   return `${padZero(res.getDate())}.${padZero(
-    res.getMonth()
+    res.getMonth() + 1
   )}.${res.getFullYear()} г.`;
 }
 

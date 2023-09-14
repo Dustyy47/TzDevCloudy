@@ -19,7 +19,11 @@ export function useCreateProductModal() {
     close();
     if (!activeUser) return;
     await dispatch(
-      productsActions.createProduct({ userId: activeUser.id, ...data })
+      productsActions.createProduct({
+        userId: activeUser.id,
+        ...data,
+        dateCreate: new Date().toJSON(),
+      })
     );
   }
 

@@ -1,11 +1,12 @@
 import { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAppDispatch, useAppSelector } from "../store";
+import { useAppDispatch } from "../store";
+import { useUsersSelector } from "../store/selectors/usersSelectors";
 import { usersActions } from "../store/slices/usersSlice";
 import { IUser } from "../types";
 
 export function useUsers() {
-  const { users, isLoading, error } = useAppSelector((state) => state.users);
+  const { users, isLoading, error } = useUsersSelector();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 

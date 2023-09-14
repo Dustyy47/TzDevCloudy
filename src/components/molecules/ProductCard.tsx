@@ -1,14 +1,15 @@
 import { Box, Button, Card, Typography } from "@material-ui/core";
 import CreateIcon from "@material-ui/icons/Create";
 import DeleteIcon from "@material-ui/icons/Delete";
-import { getDate } from "../assets/helpers/getDate";
-import { useEditProductModal } from "../hooks/useEditProductModal";
-import { useProducts } from "../hooks/useProducts";
-import { IProduct } from "../types";
+import { getDate } from "../../helpers/getDate";
+import { useEditProductModal } from "../../hooks/useEditProductModal";
+import { useProducts } from "../../hooks/useProducts";
+import { IProduct } from "../../types";
 
 export function ProductCard({ product }: { product: IProduct }) {
   const { deleteProduct } = useProducts();
   const { open } = useEditProductModal();
+
   function handleEdit() {
     open(product);
   }
@@ -18,7 +19,7 @@ export function ProductCard({ product }: { product: IProduct }) {
   }
 
   return (
-    <Card className="p-2 cursor-pointer">
+    <Card className="p-2">
       <Box className="flex justify-between gap-2">
         <Box className="flex flex-col gap-1 w-full">
           <Box className="flex justify-between w-full">

@@ -2,14 +2,13 @@ import {
   Box,
   Button,
   FormControl,
-  Input,
-  InputLabel,
+  TextField,
   Typography,
 } from "@material-ui/core";
 import { useForm } from "react-hook-form";
-import { useCreateUserModal } from "../hooks/useCreateUserModal";
-import { ICreateUser } from "../types";
-import CustomModal from "./CustomModal";
+import { useCreateUserModal } from "../../hooks/useCreateUserModal";
+import { ICreateUser } from "../../types";
+import CustomModal from "../atoms/CustomModal";
 
 const formStyle = {
   display: "flex",
@@ -27,15 +26,15 @@ export function CreateUser() {
         <Typography>Создание пользователя</Typography>
         <Box sx={formStyle}>
           <FormControl>
-            <InputLabel>Имя пользователя</InputLabel>
-            <Input
+            <TextField
+              label="Имя пользователя"
               {...register("name", { required: true })}
               placeholder="Введите имя"
             />
           </FormControl>
           <FormControl>
-            <InputLabel>Аватар</InputLabel>
-            <Input
+            <TextField
+              label="Аватар"
               {...register("avatar", { required: false })}
               placeholder="Введите ссылку на аватар"
             />

@@ -1,6 +1,6 @@
 import { Avatar, Box, Typography } from "@material-ui/core";
-import { getDate } from "../assets/helpers/getDate";
-import { IUser } from "../types";
+import { getDate } from "../../helpers/getDate";
+import { IUser } from "../../types";
 
 export function UserHeader({ user }: { user: IUser }) {
   return (
