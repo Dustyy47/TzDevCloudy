@@ -1,4 +1,9 @@
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import axios from "axios";
+import {
+  ApiError,
+  handleApiError,
+} from "../../components/helpers/handleErrors";
 import UsersAPI from "../../http/UsersAPI";
 import { ICreateUser, IEditUser, IUser } from "../../types";
 
@@ -14,15 +19,14 @@ const getUsers = createAsyncThunk<IUser[], undefined>(
   }
 );
 
-const getUser = createAsyncThunk<IUser | null, string>(
+const getUser = createAsyncThunk<IUser, string, { rejectValue: ApiError }>(
   "users/getOne",
-  async (id) => {
-    try {
-      const user = await UsersAPI.getUser(id);
-      return user ?? null;
-    } catch (e) {
-      return null;
+  async (id, { rejectWithValue }) => {
+    const response = await UsersAPI.getUser(id);
+    if (axios.isAxiosError(response)) {
+      return rejectWithValue(handleApiError(response));
     }
+    return response;
   }
 );
 
@@ -53,20 +57,18 @@ const createUser = createAsyncThunk<IUser | null, ICreateUser>(
 const editUser = createAsyncThunk<IUser | null, IEditUser>(
   "users/edit",
   async (data) => {
-    try {
-      const user = await UsersAPI.editUser(data);
-      return user ?? null;
-    } catch (e) {
-      return null;
-    }
+    const user = await UsersAPI.editUser(data);
+    return user ?? null;
   }
 );
+
 interface IUserSlice {
   users: IUser[];
   isLoading: boolean;
   activeUser: IUser | null;
   editingUser: IUser | null;
   isCreating: boolean;
+  error: ApiError | null;
 }
 
 const initialState: IUserSlice = {
@@ -75,6 +77,7 @@ const initialState: IUserSlice = {
   activeUser: null,
   editingUser: null,
   isCreating: false,
+  error: null,
 };
 
 export const userSlice = createSlice({
@@ -94,6 +97,7 @@ export const userSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(getUsers.pending, (state) => {
+        state.error = null;
         state.isLoading = true;
       })
       .addCase(getUsers.fulfilled, (state, action) => {
@@ -101,13 +105,20 @@ export const userSlice = createSlice({
         state.users = action.payload;
       })
       .addCase(getUser.pending, (state) => {
+        state.error = null;
         state.isLoading = true;
+      })
+      .addCase(getUser.rejected, (state, action) => {
+        if (!action.payload) return;
+        state.error = action.payload;
+        state.isLoading = false;
       })
       .addCase(getUser.fulfilled, (state, action) => {
         state.isLoading = false;
         state.activeUser = action.payload;
       })
       .addCase(createUser.pending, (state) => {
+        state.error = null;
         state.isLoading = true;
       })
       .addCase(createUser.fulfilled, (state, action) => {
@@ -115,6 +126,7 @@ export const userSlice = createSlice({
         state.users.push(action.payload!);
       })
       .addCase(deleteUser.pending, (state) => {
+        state.error = null;
         state.isLoading = true;
       })
       .addCase(deleteUser.fulfilled, (state, action) => {
@@ -125,6 +137,7 @@ export const userSlice = createSlice({
         );
       })
       .addCase(editUser.pending, (state) => {
+        state.error = null;
         state.isLoading = true;
       })
       .addCase(editUser.fulfilled, (state, action) => {

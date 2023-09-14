@@ -5,7 +5,7 @@ import { usersActions } from "../store/slices/usersSlice";
 import { IUser } from "../types";
 
 export function useUsers() {
-  const { users, isLoading } = useAppSelector((state) => state.users);
+  const { users, isLoading, error } = useAppSelector((state) => state.users);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
@@ -25,6 +25,7 @@ export function useUsers() {
   return {
     users,
     isLoading,
+    error,
     loadUsers,
     loadUser,
     deleteUser,

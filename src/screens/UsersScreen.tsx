@@ -1,6 +1,6 @@
-import { Box, Button, Container, Typography } from "@material-ui/core";
-import AddIcon from "@material-ui/icons/Add";
+import { Box, Container, Typography } from "@material-ui/core";
 import clsx from "clsx";
+import { AddButton } from "../components/AddButton";
 import { CreateUser } from "../components/CreateUser";
 import { EditUser } from "../components/EditUser";
 import { UsersList } from "../components/UsersList";
@@ -8,7 +8,7 @@ import { useCreateUserModal } from "../hooks/useCreateUserModal";
 import { useUsers } from "../hooks/useUsers";
 
 export function UsersScreen() {
-  const { users, isLoading } = useUsers();
+  const { users, isLoading, error } = useUsers();
   const { open } = useCreateUserModal();
 
   return (
@@ -22,13 +22,8 @@ export function UsersScreen() {
           )}
         >
           <UsersList />
-          {!isLoading && (
-            <Button onClick={open} className="flex items-center max-w-fit p-2">
-              <Typography color="primary" className="h-full leading-none">
-                Новый пользователь
-              </Typography>
-              <AddIcon color="primary" className="-translate-y-0.5" />
-            </Button>
+          {!isLoading && !error && (
+            <AddButton onClick={open}>Добавить пользователя</AddButton>
           )}
         </Box>
       </Container>

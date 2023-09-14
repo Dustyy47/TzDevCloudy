@@ -1,3 +1,4 @@
+import { AxiosError } from "axios";
 import { $api } from ".";
 import { ICreateUser, IEditUser, IUser } from "../types";
 
@@ -13,7 +14,9 @@ class UsersAPI {
     try {
       const { data } = await $api.get<IUser>(`users/${id}`);
       return data;
-    } catch (e) {}
+    } catch (e) {
+      return e as AxiosError;
+    }
   }
 
   async createUser(inputData: ICreateUser) {
