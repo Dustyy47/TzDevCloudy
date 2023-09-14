@@ -11,17 +11,9 @@ export function useProducts() {
     await dispatch(productsActions.getProducts(activeUser.id));
   }
 
-  async function deleteProduct(id: string) {
-    if (!activeUser) return;
-    await dispatch(
-      productsActions.deleteProduct({ userId: activeUser.id, id: id })
-    );
-  }
-
   return {
     products,
     isLoading,
     loadProducts,
-    deleteProduct,
   };
 }

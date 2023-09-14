@@ -1,13 +1,15 @@
 import { Avatar, Box, Button, Card, Typography } from "@material-ui/core";
 import CreateIcon from "@material-ui/icons/Create";
 import DeleteIcon from "@material-ui/icons/Delete";
+import { useDeleteUserModal } from "../../hooks/useDeleteUserModal";
 import { useEditUserModal } from "../../hooks/useEditUserModal";
 import { useUsers } from "../../hooks/useUsers";
 import { IUser } from "../../types";
 
 export function UserCard({ user }: { user: IUser }) {
-  const { loadUser, deleteUser } = useUsers();
-  const { open } = useEditUserModal();
+  const { loadUser } = useUsers();
+  const { open: openEditModal } = useEditUserModal();
+  const { open: openDeleteModal } = useDeleteUserModal();
 
   function handleClick() {
     loadUser(user);
@@ -15,12 +17,12 @@ export function UserCard({ user }: { user: IUser }) {
 
   function handleDelete(e: React.MouseEvent) {
     e.stopPropagation();
-    deleteUser(user.id);
+    openDeleteModal(user);
   }
 
   function handleEdit(e: React.MouseEvent) {
     e.stopPropagation();
-    open(user);
+    openEditModal(user);
   }
 
   return (
@@ -31,8 +33,12 @@ export function UserCard({ user }: { user: IUser }) {
           <Typography>{user.name}</Typography>
         </Box>
         <Box>
-          <Button onClick={handleEdit}>{<CreateIcon />}</Button>
-          <Button onClick={handleDelete}>{<DeleteIcon />}</Button>
+          <Button onClick={handleEdit} title="Редактировать">
+            {<CreateIcon />}
+          </Button>
+          <Button onClick={handleDelete} title="Удалить">
+            {<DeleteIcon />}
+          </Button>
         </Box>
       </Box>
     </Card>

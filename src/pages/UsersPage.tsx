@@ -2,6 +2,7 @@ import { Box, Container, Typography } from "@material-ui/core";
 import clsx from "clsx";
 import { AddButton } from "../components/atoms/AddButton";
 import { CreateUser } from "../components/organisms/CreateUser";
+import { DeleteUser } from "../components/organisms/DeleteUser";
 import { EditUser } from "../components/organisms/EditUser";
 import { UsersList } from "../components/organisms/UsersList";
 import { useCreateUserModal } from "../hooks/useCreateUserModal";
@@ -27,6 +28,7 @@ export function UsersPage() {
         </Box>
       </Container>
       <CreateUser />
+      <DeleteUser />
       <EditUser />
     </>
   );

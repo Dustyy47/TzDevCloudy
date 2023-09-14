@@ -11,6 +11,7 @@ import { AddButton } from "../components/atoms/AddButton";
 import { NotFound } from "../components/atoms/NotFound";
 import { UserHeader } from "../components/molecules/UserHeader";
 import { CreateProduct } from "../components/organisms/CreateProduct";
+import { DeleteProduct } from "../components/organisms/DeleteProduct";
 import { EditProduct } from "../components/organisms/EditProduct";
 import { ProductsList } from "../components/organisms/ProductsList";
 import { useActiveUser } from "../hooks/useActiveUser";
@@ -57,6 +58,7 @@ export function UserPage() {
       )}
       <CreateProduct />
       <EditProduct />
+      <DeleteProduct />
     </Container>
   );
 }

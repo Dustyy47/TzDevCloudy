@@ -60,6 +60,7 @@ interface IProductsSlice {
   isLoading: boolean;
   isCreating: boolean;
   editingProduct: IProduct | null;
+  deletingProduct: IProduct | null;
 }
 
 const initialState: IProductsSlice = {
@@ -67,6 +68,7 @@ const initialState: IProductsSlice = {
   isLoading: false,
   isCreating: false,
   editingProduct: null,
+  deletingProduct: null,
 };
 
 export const productsSlice = createSlice({
@@ -78,6 +80,9 @@ export const productsSlice = createSlice({
     },
     setCreating(state, action: PayloadAction<boolean>) {
       state.isCreating = action.payload;
+    },
+    setDeleting(state, action: PayloadAction<IProduct | null>) {
+      state.deletingProduct = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -94,6 +99,7 @@ export const productsSlice = createSlice({
       })
       .addCase(deleteProduct.fulfilled, (state, action) => {
         state.isLoading = false;
+        state.deletingProduct = null;
         if (action.payload == null) return;
         state.products = state.products.filter(
           (product) => product.id !== action.payload!.id

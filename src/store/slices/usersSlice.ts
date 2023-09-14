@@ -64,6 +64,7 @@ interface IUserSlice {
   isLoading: boolean;
   activeUser: IUser | null;
   editingUser: IUser | null;
+  deletingUser: IUser | null;
   isCreating: boolean;
   error: ApiError | null;
 }
@@ -74,6 +75,7 @@ const initialState: IUserSlice = {
   activeUser: null,
   editingUser: null,
   isCreating: false,
+  deletingUser: null,
   error: null,
 };
 
@@ -89,6 +91,9 @@ export const userSlice = createSlice({
     },
     setCreating(state, action: PayloadAction<boolean>) {
       state.isCreating = action.payload;
+    },
+    setDeleting(state, action: PayloadAction<IUser | null>) {
+      state.deletingUser = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -128,6 +133,7 @@ export const userSlice = createSlice({
       })
       .addCase(deleteUser.fulfilled, (state, action) => {
         state.isLoading = false;
+        state.deletingUser = null;
         if (action.payload == null) return;
         state.users = state.users.filter(
           (user) => user.id !== action.payload!.id

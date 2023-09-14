@@ -19,16 +19,11 @@ export function useUsers() {
     navigate(targetUser.id);
   }, []);
 
-  async function deleteUser(id: string) {
-    await dispatch(usersActions.deleteUser(id));
-  }
-
   return {
     users,
     isLoading,
     error,
     loadUsers,
     loadUser,
-    deleteUser,
   };
 }
